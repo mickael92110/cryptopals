@@ -159,6 +159,12 @@ int * XOR(char * buff1, char * buff2, int len){
 	return res; 
 }
 
+char * copy_char(char a, int len){
+	char * res = NULL;
+	res = malloc(sizeof(char) * len);
+	for(int i = 0; i < len; ++i) res[i] = (char)a;
+	return res;
+}
 
 int main(){
 
@@ -201,8 +207,15 @@ int main(){
 //**********************************************************************************
 
 	char buff_myst[] = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
-	//char buff_myst[] = "686974207468652062756c6c277320657965";
-	printf("%s\n", strHex_to_ASCII(buff_myst, sizeof(buff_myst)));
-
+	int len = sizeof(buff_myst);
+	char * key;
+	int *res_mess;
+	
+	for(int i = 0; i < 257; ++i ){
+		key = copy_char(i,len);
+		printf("%s\n", key);
+		res_mess = XOR(key, buff_myst, len);
+		printf("%d : %s\n",i,hex_to_ASCII(res_mess, len));
+	}
 	return 0;
 }
