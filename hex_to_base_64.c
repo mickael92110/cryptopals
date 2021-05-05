@@ -125,7 +125,20 @@ int * hex_to_base64(int * tab_hex, int len){
 	return tab_base64;
 }
 
-
+char * hex_to_ASCII (int * tab_hex, int len){
+	char *  hex_char = NULL;
+	hex_char = malloc(len/2 * sizeof(char));
+	char temp;
+	int j = 0;
+	
+	for(int i = 0; i < len; i += 2 ){
+		temp = tab_hex[i] << 4;
+		temp = temp |  tab_hex[i+1];
+		hex_char[j] = temp;
+		++j;
+	}
+	return hex_char;
+}
 
 
 int main(){
@@ -139,6 +152,10 @@ int main(){
 	int * tab_base64 = hex_to_base64(tab_hex, len);
 	
 	printf("%s\n", base64_to_str(tab_base64,len)) ;	
+	
+	char * hex_char = hex_to_ASCII(tab_hex, len); 	
+	
+	printf("%s\n", hex_char);
 	
 	return 0;
 }
