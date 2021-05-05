@@ -99,7 +99,7 @@ int * str_to_hex(char * str, int len){
 		else{
 			tab_hex[i]= str[i]-'0';
 		}
-		printf("%X", tab_hex[i]);
+		//printf("%X", tab_hex[i]);
 	}
 	return tab_hex;
 } 
@@ -140,22 +140,69 @@ char * hex_to_ASCII (int * tab_hex, int len){
 	return hex_char;
 }
 
+char * strHex_to_ASCII(char * str, int len){
+	char * temp_str = NULL;
+	temp_str = malloc(sizeof(char)*len);
+	int * temp = str_to_hex(str,len);
+	temp_str = hex_to_ASCII(temp, len);
+	return temp_str; 
+}
+
+int * XOR(char * buff1, char * buff2, int len){
+	int *buff1_hex = str_to_hex(buff1, len);
+	int *buff2_hex = str_to_hex(buff2, len);
+	int *res = NULL;
+	res = malloc(sizeof(int)*len);
+	for(int i = 0; i < len; ++i){
+		res[i] = buff1_hex[i] ^ buff2_hex[i];
+	}
+	return res; 
+}
+
 
 int main(){
-	char str[] = "49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d";	
-	int len = (int)sizeof(str)-1;
+
+//**********************************************************************************
+//	Challenge 1
+//**********************************************************************************
+
+//	char str[] = "49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d";	
+//
+//	int len = (int)sizeof(str)-1;
+//	
+//	int * tab_hex = str_to_hex(str, len);
+//	
+//	printf("\n");
+//	
+//	int * tab_base64 = hex_to_base64(tab_hex, len);
+//	
+//	printf("%s\n", base64_to_str(tab_base64,len)) ;	
+//	
+//	char * hex_char = hex_to_ASCII(tab_hex, len); 	
+//	
+//	printf("%s\n", hex_char);
 	
-	int * tab_hex = str_to_hex(str, len);
+
+//**********************************************************************************
+//	Challenge 2
+//**********************************************************************************
 	
-	printf("\n");
-	
-	int * tab_base64 = hex_to_base64(tab_hex, len);
-	
-	printf("%s\n", base64_to_str(tab_base64,len)) ;	
-	
-	char * hex_char = hex_to_ASCII(tab_hex, len); 	
-	
-	printf("%s\n", hex_char);
-	
+//	char buff1[] = "1c0111001f010100061a024b53535009181c";	
+//	char buff2[] = "686974207468652062756c6c277320657965";
+//	printf("%s\n", hex_to_ASCII(str_to_hex(buff1, sizeof(buff1)),sizeof(buff1)));	
+// 	printf("%s\n", hex_to_ASCII(str_to_hex(buff2, sizeof(buff2)),sizeof(buff2)));	
+//	int len2 = sizeof(buff1);
+//	int * res_xor = XOR(buff1, buff2, len2);
+//	printf("%s\n", hex_to_ASCII(res_xor, len2));
+
+
+//**********************************************************************************
+//	Challenge 3
+//**********************************************************************************
+
+	char buff_myst[] = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
+	//char buff_myst[] = "686974207468652062756c6c277320657965";
+	printf("%s\n", strHex_to_ASCII(buff_myst, sizeof(buff_myst)));
+
 	return 0;
 }
