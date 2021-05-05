@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-void hex_to_base64(int a, int b, int c, int * r1, int * r2){ 
+void binary_shift(int a, int b, int c, int * r1, int * r2){ 
 	*r1 = a   << 4;
 	*r1 = *r1 |  b;
 	*r1 = *r1 >> 2;  
@@ -13,6 +13,7 @@ void hex_to_base64(int a, int b, int c, int * r1, int * r2){
 }
 
 char * base64_to_str(int * tab, int len){
+	len = (len*2)/3; 
 	char * res = malloc(sizeof(char) * len);
 	res[0] = '\0';
 	for(int i = 0; i < len; ++i){
@@ -87,43 +88,57 @@ char * base64_to_str(int * tab, int len){
 
 	return res;
 }
+int * str_to_hex(char * str, int len){
+	int * tab_hex = NULL;
+	tab_hex = malloc(sizeof(int) * len);
+
+	for(int i = 0; i < len; ++i){
+		if(str[i] > '9'){
+			tab_hex[i] = str[i]-'a'+10;
+		}
+		else{
+			tab_hex[i]= str[i]-'0';
+		}
+		printf("%X", tab_hex[i]);
+	}
+	return tab_hex;
+} 
+
+int * hex_to_base64(int * tab_hex, int len){
+	int * tab_base64 = NULL; 
+	tab_base64 = malloc(sizeof(int) * len);
+	int * r1 = malloc(sizeof(int));
+	int * r2 = malloc(sizeof(int));
+	int j = 0;
+
+
+	for(int i = 0; i < len-1; i += 3){
+		binary_shift(tab_hex[i],tab_hex[i+1],tab_hex[i+2],r1,r2);
+		tab_base64[j]   = *r1;
+		tab_base64[j+1] = *r2; 
+		j += 2;
+	}
+	
+	free(r1);
+	free(r2);
+
+	return tab_base64;
+}
+
 
 
 
 int main(){
 	char str[] = "49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d";	
 	int len = (int)sizeof(str)-1;
-	int tab_int[256];
-	int tab_base64[256];
-	int * r1 = malloc(sizeof(int));
-	int * r2 = malloc(sizeof(int));
-	int j = 0;
-	for(int i = 0; i < sizeof(str)-1; ++i){
-		if(str[i] > '9'){
-			tab_int[i] = str[i]-'a'+10;
-		}
-		else{
-			tab_int[i]= str[i]-'0';
-		}
-
-		printf("%X", tab_int[i]);
-	}
+	
+	int * tab_hex = str_to_hex(str, len);
 	
 	printf("\n");
 	
-	for(int i = 0; i < len-1; i += 3){
-		hex_to_base64(tab_int[i],tab_int[i+1],tab_int[i+2],r1,r2);
-		tab_base64[j]   = *r1;
-		tab_base64[j+1] = *r2; 
-		//printf("%X %X ", tab_base64[j], tab_base64[j+1]);
-		j += 2;
-	}
+	int * tab_base64 = hex_to_base64(tab_hex, len);
 	
-	printf("\n");
-	
-	free(r1);
-	free(r2);
-	printf("%s\n", base64_to_str(tab_base64, (len*2)/3));	
+	printf("%s\n", base64_to_str(tab_base64,len)) ;	
 	
 	return 0;
 }
