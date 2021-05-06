@@ -99,7 +99,7 @@ int * str_to_hex(char * str, int len){
 		else{
 			tab_hex[i]= str[i]-'0';
 		}
-		//printf("%X", tab_hex[i]);
+		printf("%X", tab_hex[i]);
 	}
 	return tab_hex;
 } 
@@ -155,6 +155,7 @@ int * XOR(char * buff1, char * buff2, int len){
 	res = malloc(sizeof(int)*len);
 	for(int i = 0; i < len; ++i){
 		res[i] = buff1_hex[i] ^ buff2_hex[i];
+	//	printf("%X", res[i]);
 	}
 	return res; 
 }
@@ -193,13 +194,13 @@ int main(){
 //	Challenge 2
 //**********************************************************************************
 	
-//	char buff1[] = "1c0111001f010100061a024b53535009181c";	
-//	char buff2[] = "686974207468652062756c6c277320657965";
-//	printf("%s\n", hex_to_ASCII(str_to_hex(buff1, sizeof(buff1)),sizeof(buff1)));	
-// 	printf("%s\n", hex_to_ASCII(str_to_hex(buff2, sizeof(buff2)),sizeof(buff2)));	
-//	int len2 = sizeof(buff1);
-//	int * res_xor = XOR(buff1, buff2, len2);
-//	printf("%s\n", hex_to_ASCII(res_xor, len2));
+	//char buff1[] = "1c0111001f010100061a024b53535009181c";	
+	//char buff2[] = "686974207468652062756c6c277320657965";
+	//printf("%s\n", hex_to_ASCII(str_to_hex(buff1, sizeof(buff1)),sizeof(buff1)));	
+ 	//printf("%s\n", hex_to_ASCII(str_to_hex(buff2, sizeof(buff2)),sizeof(buff2)));	
+	//int len2 = sizeof(buff1);
+	//int * res_xor = XOR(buff1, buff2, len2);
+	//printf("%s\n", hex_to_ASCII(res_xor, len2));
 
 
 //**********************************************************************************
@@ -207,15 +208,47 @@ int main(){
 //**********************************************************************************
 
 	char buff_myst[] = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
-	int len = sizeof(buff_myst);
-	char * key;
-	int *res_mess;
+	int len = sizeof(buff_myst)-1;
+	int * hex_buff_myst = str_to_hex(buff_myst, len);
+	printf("\n");
+	int c = 0x41;                                	
+        int c1 = c >> 4 ;
+        int c2 = c & ~(0xF0) ; 
+	int * hex_res = malloc(sizeof(int) * len);
+	for(int j = 0; j < 256 ; ++j){
+	c = j;
+	c1 = c >> 4;
+	c2 = c & ~(0xF0); 	
 	
-	for(int i = 0; i < 257; ++i ){
-		key = copy_char(i,len);
-		printf("%s\n", key);
-		res_mess = XOR(key, buff_myst, len);
-		printf("%d : %s\n",i,hex_to_ASCII(res_mess, len));
+		for(int i = 0; i< len; i+= 2){
+			hex_res[i] = c1 ^ hex_buff_myst[i] ;
+			hex_res[i+1] = c2 ^ hex_buff_myst[i+1];
+			//printf("%X%X", hex_res[i], hex_res[i+1]);	
+		}
+	printf("%s", hex_to_ASCII(hex_res, len));	
+	printf("\n");
 	}
+	//char c = 0x41;
+	//printf("%c\n", c );	
+	//char c1 = c >> 4 ;
+	//char c2 = c & ~(0xF0) ; 
+	//printf("%X\n", c1 );	
+	//printf("%X\n", c2 );	
+	//char * res = malloc(sizeof(char) * len);
+	//char * str_temp = malloc(sizeof(char) * len);
+	//for(int j = 0; j < 256; j += 1 ){
+	//c = j;
+	//c1 = c >> 4 ;
+        //c2 = c & ~(0xF0) ;
+	//	for(int i = 0; i< len; i+= 2){
+	//		str_temp[i] = c1;
+	//		str_temp[i+1] = c2;
+	//		res[i] = c1 ^ buff_myst[i];
+	//		res[i+1] = c2 ^ buff_myst[i+1];
+	//		
+	//	}
+	//printf("%s\n" ,res);
+	//}
+
 	return 0;
 }
