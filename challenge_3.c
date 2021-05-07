@@ -2,8 +2,8 @@
 #include "challenge_2.h"
 #include "challenge_1.h"
 
-void brute_force_1_octet(char * buff_myst, int len){
-	int * hex_buff_myst = str_to_hex(buff_myst, len);
+void brute_force_1_octet(int * hex_buff_myst, int len){
+	//int * hex_buff_myst = str_to_hex(buff_myst, len);
 	int c;                                	
         int c1;
         int c2; 

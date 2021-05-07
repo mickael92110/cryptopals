@@ -6,7 +6,7 @@
 #include "challenge_1.h"
 
 
-int * XOR(char * buff1, char * buff2, int len);
+int * XOR(int * buff1, int * buff2, int len);
 
 
 #endif

@@ -7,6 +7,6 @@
 #include "challenge_2.h"
 
 
-void brute_force_1_octet(char * buff_myst, int len);
+void brute_force_1_octet(int * buff_myst, int len);
 
 #endif
