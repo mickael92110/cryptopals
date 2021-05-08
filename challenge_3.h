@@ -9,4 +9,6 @@
 
 void brute_force_1_octet(int * buff_myst, int len);
 
+void letter_f_analyse(FILE* fichier);
+
 #endif
