@@ -11,4 +11,6 @@ void brute_force_1_octet(int * buff_myst, int len);
 
 void letter_f_analyse(FILE* fichier);
 
+int sort_tab(float * tab, char * tab_c, int len);
+
 #endif

@@ -29,6 +29,8 @@ void letter_f_analyse(FILE* fichier){
 	float alpha[26];
 	for(int i = 0; i < 26; ++i) alpha[i] = 0;
 	float alpha_p[26];
+	char * alpha_c = malloc(sizeof(char)*26);
+	for(int i = 0; i < 26; ++i) alpha_c[i] = 'a' + i;
 
 	if (fichier != NULL){
 		do{
@@ -60,4 +62,32 @@ void letter_f_analyse(FILE* fichier){
 	for(int i = 0; i < 26; ++i) printf("%c : %.2f\n", i + 'a', alpha[i]);
 	printf("\n");
 	for(int i = 0; i < 26; ++i) printf("%c : %.2f\n", i + 'a', alpha_p[i]);
+	sort_tab(alpha_p, alpha_c, 26);
+	printf("\n");
+	for(int i = 0; i < 26; ++i) printf("%c : %.2f\n", alpha_c[i], alpha_p[i]);
 }
+
+
+
+int  sort_tab(float * tab, char * tab_c, int len){
+	float max = tab[0];
+	int idx_max = 0;
+	char temp;
+	for(int i = 0; i < len; ++i){
+		if(tab[i] > max){
+			idx_max = i;
+			max = tab[i];	
+		}
+	}
+	tab[idx_max] = tab[0];
+	tab[0] = max;
+	temp = tab_c[idx_max];
+	tab_c[idx_max] = tab_c[0];
+	tab_c[0] = temp;
+	if(len == 0) return 0;
+	sort_tab(++tab, ++tab_c , --len);
+	return 0;
+}
+
+
+
