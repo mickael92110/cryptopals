@@ -22,8 +22,56 @@ void brute_force_1_octet(int * hex_buff_myst, int len){
 	}
 }
 
+void letter_f_analyse_string(char * str){
+	int ctr = 0;
+	int len = strlen(str);
+	int char_act = 0;
+	float alpha[26];
+	float alpha_p[26];
+	char * alpha_c = malloc(sizeof(char)*26);
+	for(int i = 0; i < 26; ++i) alpha_c[i] = 'a' + i;
+	for(int i = 0; i < 26; ++i) alpha[i] = 0;
+	
+	for(int i = 0; i < len; ++i ){
 
-void letter_f_analyse(FILE* fichier){
+		char_act = str[i]; 
+		printf("%c", char_act); 
+		if((char_act >= 'a' && char_act <= 'z') || (char_act >= 'A' && char_act <= 'Z')){
+			++ctr;
+			if(char_act >= 'a' && char_act <= 'z'){
+					++alpha[char_act - 'a'];
+			}
+			else{
+				++alpha[char_act - 'A'];
+			}
+		}
+       	}
+	printf("\nctr : %d\n", ctr);	
+	for(int i = 0; i < 26; ++i) alpha_p[i] = (alpha[i] * 100) / ctr;
+
+	for(int i = 0; i < 26; ++i) printf("%c : %.2f\n", i + 'a', alpha[i]);
+	printf("\n");
+	for(int i = 0; i < 26; ++i) printf("%c : %.2f\n", i + 'a', alpha_p[i]);
+	sort_tab(alpha_p, alpha_c, 26);
+	printf("\n");
+	for(int i = 0; i < 26; ++i) printf("%c : %.2f\n", alpha_c[i], alpha_p[i]);
+	
+	int indice = 0;
+	
+	for(int i = 0; i < 11 ; ++i){
+		if(alpha_c[i] == 'e' || alpha_c[i] == 't' || alpha_c[i] == 'a'|| alpha_c[i] == 'o'|| alpha_c[i] == 'n'|| alpha_c[i] == 'h'|| alpha_c[i] == 'i'|| alpha_c[i] == 'r'|| alpha_c[i] == 's'|| alpha_c[i] == 'd'|| alpha_c[i] == 'l'){
+			++indice;	
+		}
+		else{
+			--indice;
+		}
+	}
+	printf("indice : %d \n", indice);	
+}
+	
+
+
+void letter_f_analyse_File(FILE* fichier){
 	int ctr = 0;
 	int char_act = 0;
 	float alpha[26];

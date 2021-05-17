@@ -50,17 +50,20 @@ int main(){
 //	Challenge 3
 //**********************************************************************************
 
-//	char buff_myst[] = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
-//	int len3 = sizeof(buff_myst)-1;
-//	int * hex_buff_myst = str_to_hex(buff_myst, len3);
-//	brute_force_1_octet(hex_buff_myst, len3);
+	char buff_myst[] = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
+	int len3 = sizeof(buff_myst)-1;
+	int * hex_buff_myst = str_to_hex(buff_myst, len3);
+	brute_force_1_octet(hex_buff_myst, len3);
 
 
 	FILE* fichier = NULL;
 	fichier = fopen("text_1.txt", "r+");
-	letter_f_analyse(fichier);
+	letter_f_analyse_File(fichier);
+	
+	char * test = "Yuuqst}:WY=i:vsq:{:juot~:u|:x{yut";
 
-
+	letter_f_analyse_string(test);
+	
 
 
 
